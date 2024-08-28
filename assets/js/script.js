@@ -2,14 +2,13 @@
 
 //1.- Crear la estructura de datos mediante arreglos [] y objetos {}
 
-let radiología =
-    [
-        { hora: '11:00', especialista: 'IGNACIO SCHULZ', paciente: 'FRANCISCA ROJAS', rut: '9878782-1', prevision: 'FONASA' },
-        { hora: '11:30', especialista: 'FEDERICO SUBERCASEAUX', paciente: 'PAMELA ESTRADA', rut: '15345241-3', prevision: 'ISAPRE' },
-        { hora: '15:00', especialista: 'FERNANDO WURTHZ', paciente: 'ARMANDO LUNA', rut: '16445345-9', prevision: 'ISAPRE' },
-        { hora: '15:30', especialista: 'IGNACIO SCHULZ', paciente: 'ANA MARIA GODOY', rut: '17666419-0', prevision: 'FONASA' },
-        { hora: '16:00', especialista: 'PATRICIA SUAZO', paciente: 'RAMON ULLOA', rut: '14989389-K', prevision: 'FONASA' }
-    ];
+let radiología = [
+    { hora: '11:00', especialista: 'IGNACIO SCHULZ', paciente: 'FRANCISCA ROJAS', rut: '9878782-1', prevision: 'FONASA' },
+    { hora: '11:30', especialista: 'FEDERICO SUBERCASEAUX', paciente: 'PAMELA ESTRADA', rut: '15345241-3', prevision: 'ISAPRE' },
+    { hora: '15:00', especialista: 'FERNANDO WURTHZ', paciente: 'ARMANDO LUNA', rut: '16445345-9', prevision: 'ISAPRE' },
+    { hora: '15:30', especialista: 'IGNACIO SCHULZ', paciente: 'ANA MARIA GODOY', rut: '17666419-0', prevision: 'FONASA' },
+    { hora: '16:00', especialista: 'PATRICIA SUAZO', paciente: 'RAMON ULLOA', rut: '14989389-K', prevision: 'FONASA' }
+];
 
 let traumatología = [
     { hora: '8:00', especialista: 'MARIA PAZ ALTUZARRA', paciente: 'PAULA SANCHEZ', rut: '15554774-5', prevision: 'FONASA' },
@@ -34,7 +33,7 @@ let dental = [
 
 //2.1 Primer y último paciente radiología
 
-document.write(`<strong><u>Radiología</u></strong>: <br> primera atención: ${radiología[0].paciente} - ${radiología[0].prevision} <strong>|</strong> `)
+document.write(`<strong><u>Radiología</u></strong> (antes de shift y pop): <br> primera atención: ${radiología[0].paciente} - ${radiología[0].prevision} <strong>|</strong> `)
 document.write(`Última atención: ${radiología[radiología.length - 1].paciente} - ${radiología[radiología.length - 1].prevision} <br><br>`)
 
 //2.2 Primer y último paciente traumatología
@@ -44,6 +43,17 @@ document.write(`Última atención: ${traumatología[traumatología.length - 1].p
 //2.3 Primer y último paciente Dental
 document.write(`<strong><u>Dental</u></strong>: <br> primera atención: ${dental[0].paciente} - ${dental[0].prevision} <strong>|</strong> `)
 document.write(`Última atención: ${dental[dental.length - 1].paciente} - ${dental[dental.length - 1].prevision} <br><br>`)
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+//Eliminar el primer y último elemento del arreglo de Radiología:
+
+//Eliminar el primero con médoto shift
+radiología.shift();
+
+
+//Eliminar útimo dato con método pop
+radiología.pop();
+//---------------------------------------------------------------------------------------------------
 
 
 //3.- Recorrer el arreglo y mostrar su contenido:
@@ -63,6 +73,18 @@ for (var i = 0; i < radiología.length; i++) {
 }
 
 document.write(`<table border="1" style="background-color: lightblue;" >${tablaRadiologia}</table> <br>`);
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+//Agregar horas al array de traumatología:
+
+traumatología.push({ hora: '09:00', especialista: 'RENÉ POBLETE', paciente: 'ANA GELLONA', rut: '13123329-7', prevision: 'ISAPRE' },
+    { hora: '09:30', especialista: 'MARÍA SOLAR', paciente: 'RAMIRO ANDRADE', rut: '12221451-K', prevision: 'FONASA' },
+    { hora: '10:00', especialista: 'RAUL LOYOLA', paciente: 'CARMEN ISLA', rut: '10112348-3', prevision: 'ISAPRE' },
+    { hora: '10:30', especialista: 'ANTONIO LARENAS', paciente: 'PABLO LOAYZA', rut: '13453234-1', prevision: 'ISAPRE' },
+    { hora: '12:00', especialista: 'MATIAS ARAVENA', paciente: 'SUSANA POBLETE', rut: '14345656-6', prevision: 'FONASA' },
+);
+
+//--------------------------------------------------------------------------------------------------
 
 //3.2.- Tabla especialidad Traumatología:
 var tablaTraumatología =
@@ -95,3 +117,61 @@ for (var i = 0; i < dental.length; i++) {
 }
 
 document.write(`<table border="1" style="background-color: lightgreen;" >${tablaDental}</table> <br>`);
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+// Imprimir en la página HTML arrayDental, ocupe reduce
+
+var dientecillos =
+    dental.reduce(function (acumulador, diente) {
+        return acumulador + diente.hora + ' - ' + diente.especialista + ' - ' + diente.paciente + ' - ' + diente.rut + ' - ' + diente.prevision + "<br>";
+    }, '');
+document.write(`${dientecillos} <br>`);
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+//Imprimir un listado total de todos los pacientes que se atendieron en el centro médico
+
+document.write("<br> Total de clientes atendidos en las 3 especialidades: <br><br>")
+
+radiología.forEach(function (pacientes) {
+    document.write(`${pacientes.paciente} <br>`);
+})
+traumatología.forEach(function (pacientes) {
+    document.write(`${pacientes.paciente} <br>`);
+})
+dental.forEach(function (pacientes) {
+    document.write(`${pacientes.paciente} <br>`);
+})
+
+document.write("*nota: se han descontado los clientes quitados con shift y pop <br>")
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+//Filtrar pacientes de Isapre de Dental:
+//identifico con filter los que cumplan el requisito de Isapre
+var isapreDental =
+    dental.filter(function (atendidos) {
+        return atendidos.prevision === 'ISAPRE'
+    });
+
+//Luego el objeto resultante lo llevo a cadena de texto separada por guión
+var isapreDentalReduce =
+    isapreDental.reduce(function (acumulador, cliente) {
+        return acumulador + cliente.paciente + ' - ' + cliente.prevision + "<br>";
+    }, '');
+document.write(`<br><br> Pacientes area Dental Isapre: <br> 
+    ${isapreDentalReduce}`);
+
+//Requerimiento nuevo------------------------------------------------------------------------------
+//Filtrar pacientes de Fonasa de Traumatologá:
+//identifico con filter los que cumplan el requisito de Isapre
+var fonasaTraumatología =
+    traumatología.filter(function (atendidos) {
+        return atendidos.prevision === 'FONASA'
+    });
+
+//Luego el objeto resultante lo llevo a cadena de texto separada por guión
+var fonasaTraumatologíaReduce =
+    fonasaTraumatología.reduce(function (acumulador, traumado) {
+        return acumulador + traumado.paciente + ' - ' + traumado.prevision + "<br>";
+    }, '');
+document.write(`<br><br> Pacientes area Traumatología Fonasa: <br> 
+    ${fonasaTraumatologíaReduce} <br>`);
